@@ -45,9 +45,9 @@ After doing that, I accidentally discovered that posting ‘test’ to the group
 **Privacy Mode:**
 
 1. Disable privacy mode:
-- Open a chat with BotFather.
-- Send the command /mybots to see a list of your bots.
-- Select your bot and use the command Edit Bot Privacy to turn off privacy mode.
+   - Open a chat with BotFather.
+   - Send the command /mybots to see a list of your bots.
+   - Select your bot and use the command Edit Bot Privacy to turn off privacy mode.
 
 **Group Admin:**
 
