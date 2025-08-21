@@ -9,30 +9,23 @@ x-shared: &shared
   restart: always
   image: docker.n8n.io/n8nio/n8n
   environment:
-    - NODE_ENV=production
-    - GENERIC_TIMEZONE=Asia/Jakarta
     - DB_TYPE=postgresdb
     - DB_POSTGRESDB_HOST=postgres
     - DB_POSTGRESDB_PORT=5432
     - DB_POSTGRESDB_DATABASE=${POSTGRES_DB}
     - DB_POSTGRESDB_USER=${POSTGRES_NON_ROOT_USER}
     - DB_POSTGRESDB_PASSWORD=${POSTGRES_NON_ROOT_PASSWORD}
-    - WEBHOOK_URL=${BASE_URL}
     - EXECUTIONS_MODE=queue
     - QUEUE_BULL_REDIS_HOST=redis
     - QUEUE_HEALTH_CHECK_ACTIVE=true
-    - N8N_PROTOCOL=https
     - N8N_ENCRYPTION_KEY=${ENCRYPTION_KEY}
     - N8N_EDITOR_BASE_URL=${BASE_URL}
-    - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
-    - N8N_PROXY_HOPS=1
-    - N8N_SMTP_SSL=true
+    - WEBHOOK_URL=${WEBHOOK_URL}
+    - N8N_RUNNERS_ENABLED=true
     - N8N_SMTP_HOST=smtp.gmail.com
-    - N8N_SMTP_PORT=465
+    - N8N_SMTP_PORT=587
     - N8N_SMTP_USER=${SMTP_USER}
     - N8N_SMTP_PASSWORD=${SMTP_PASSWORD}
-    - N8N_EXPRESS_TRUST_PROXY=true
-    - N8N_PUSH_BACKEND=websocket
   links:
     - postgres
     - redis
@@ -68,6 +61,8 @@ services:
     restart: always
     volumes:
       - redis_storage:/data
+    ports:
+      - 6377:6379
     healthcheck:
       test: ['CMD', 'redis-cli', 'ping']
       interval: 5s
@@ -77,7 +72,7 @@ services:
   n8n:
     <<: *shared
     ports:
-      - 5678:5678
+      - 5679:5678
 
   n8n-worker:
     <<: *shared
